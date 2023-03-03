@@ -1,0 +1,2 @@
+ansible_host: 50.0.2.81
+ansible_connection: ssh
