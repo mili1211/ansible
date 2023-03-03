@@ -1,25 +1,15 @@
 ---
     - name: Install git
-      apt:
+      yum:
        name: git
        state: present
        update_cache: yes
       tags: install_git
 
-    - name: Just get information about the repository whether or not it has already been cloned locally
-      ansible.builtin.git:
-        repo: 'https://github.com/mili1211/projeta.git'
-        dest: /home/milica/projeta
-        clone: no
-        update: no
-      register: repo_exist
-      tags: clone_repo
-
     - name: Clone the project to GitHub
       ansible.builtin.git:
-        repo: "https://github.com/mili1211/projeta.git"
+        repo: "https://github.com/mili1211/ansible.git"
         force: yes
-        dest:  /home/milica/projeta
-      tags: clone_repo2
-      # when : 
-      #   - repo_exist.changed == false
+        dest:  /home/ec2-user/ansible
+      tags: clone_repo
+    
