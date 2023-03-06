@@ -1,54 +1,45 @@
 ---
-      - name: Install aptitude
-        apt:
-          name: aptitude
-          state: latest
-          update_cache: true
-        tags: apt
+   - name: Update all packages
+     yum:
+       name: '*'
+       state: latest
+       update_only: yes
 
-      - name: Install required system packages
-        apt: 
-          pkg:
-            - apt-transport-https
-            - ca-certificates
-            - curl
-            - software-properties-common
-            - python3-pip
-            - virtualenv
-            - python3-setuptools
-          state: latest
-          update_cache: true
-        tags: packages
-    
-      - name: Add Docker GPG apt key
-        apt_key: 
-          url: https://download.docker.com/linux/ubuntu/gpg
-          state: present
-        tags: docker_apt_key
-    
-      - name: Add Docker Repository
-        apt_repository:
-          repo: deb https://download.docker.com/linux/ubuntu focal stable
-          state: present
-        tags: docker_repository
-    
-      - name: Udate apt and install docker-ce
-        apt: 
-          name: "{{ item }}"
-          state: latest
-          update_cache: true
-        loop:
-          - docker-ce
-          - docker-ce-cli
-          - containerd.io
-          - docker-compose-plugin
-        tags: install_docker
-    
-      - name: Install Docker Module for python
-        pip:
-          name: docker
-        tags: docker_for_python
+   - name: Ensure a list of yum packages are installed
+     yum:
+       name: "{{ packages }}"
+       state: latest
+       update_cache: yes
+     vars:
+       packages:
+       - python-pip
+       - yum-utils
+       - device-mapper-persistent-data
+       - lvm2
+       - amazon-linux-extras
 
+   - name: Add extras repository
+     shell: yum-config-manager --enable extras
+
+   - name: Install docker-ce (centos) via amazon-linux-extras packages
+     shell: "amazon-linux-extras install docker=18.06.1 -y"
+
+   - name: Enable Docker CE service at startup
+     service:
+       name: docker
+       state: started
+       enabled: yes
+
+   - name: Install pip
+     yum:
+       name: python3-pip
+       state: present
+
+   - name: Install Docker module for Python
+     pip:
+       name: docker
+       executable: pip3
+       state: present
     
 
 
