@@ -5,42 +5,38 @@
        state: latest
        update_only: yes
 
-   - name: Ensure a list of yum packages are installed
+   - name: Install required packages
      yum:
-       name: "{{ packages }}"
-       state: latest
-       update_cache: yes
-     vars:
-       packages:
-       - python-pip
-       - yum-utils
-       - device-mapper-persistent-data
-       - lvm2
-       - amazon-linux-extras
+       name:
+         - yum-utils
+         - amazon-linux-extras
+         - docker
+       state: present
 
-   - name: Add extras repository
-     shell: yum-config-manager --enable extras
-
-   - name: Install docker-ce (centos) via amazon-linux-extras packages
-     shell: "amazon-linux-extras install docker=18.06.1 -y"
-
-   - name: Enable Docker CE service at startup
-     service:
+   - name: Enable Docker service
+     systemd:
        name: docker
        state: started
-       enabled: yes
+       enabled: true
 
-   - name: Install pip
-     yum:
-       name: python3-pip
-       state: present
+   - name: Add the user to the docker group
+     user:
+       name: ec2-user
+       append: yes
+       groups: docker
 
-   - name: Install Docker module for Python
-     pip:
+   - name: Restart Docker service
+     systemd:
        name: docker
-       executable: pip3
+       state: restarted
+
+   - name: Install Python pip for Python 2.7
+     yum:
+       name: python2-pip
        state: present
-    
+
+   - name: Install Docker module for Python 2.7
+     command: pip2 install docker --ignore-installed
 
 
  

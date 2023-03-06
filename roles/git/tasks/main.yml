@@ -6,7 +6,7 @@
        update_cache: yes
       tags: install_git
 
-    - name: Clone the project to GitHub
+    - name: Clone the project from GitHub
       ansible.builtin.git:
         repo: "https://github.com/mili1211/ansible.git"
         force: yes
