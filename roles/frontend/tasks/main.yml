@@ -5,13 +5,13 @@
         ports:
           - "80:80"
         volumes:
-          - /home/milica/projeta/student-list/website:/var/www/html
+          - /home/milica/ansible/student-list/website:/var/www/html
         env:
           USERNAME: "toto"
           PASSWORD: "python"
         image: php:apache
         networks:
-            - name: "{{ networkname }}"
+            - name: student-list
       tags: container_front
 
     

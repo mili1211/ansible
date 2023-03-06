@@ -1,27 +1,26 @@
 ---
-  - name: Build image docker 
-    community.docker.docker_image:
-      name: student-list:latest
-      build:
-        path: /home/milica/projeta/student-list/simple_api
-      source: build
-    tags: image_docker
-  
-  - name: Create private container's network
-    community.docker.docker_network:
-      name: student-list:latest
-    tags: network
+  - name: Build image docker
+     docker_image:
+       name: student-list:latest
+       build:
+         path: /home/ec2-user/ansible/student-list/simple_api
+       source: build
+     tags: image_docker
 
-  - name: Start the container with the backend and connect it to the network
-    docker_container:
-      name: api-projet-a
-      recreate: "true"
-      image: student-list:latest
-      networks:
-        - name: "{{ networkname }}"
-      ports:
+   - name: Create private container's network
+     docker_network:
+       name: student-list
+     tags: network
+
+   - name: Start the container with the backend and connect it to the network
+     docker_container:
+       name: api-projet-a
+       recreate: "true"
+       image: student-list:latest
+       networks:
+        - name: student-list
+       ports:
         - "5000:5000"
-      volumes: 
-      - /home/milica//projeta/student-list/simple_api/student_age.json:/data/student_age.json
-    tags: run_backend
-
+       volumes:
+       - /home/ec2-user/ansible/student-list/simple_api/student_age.json:/data/student_age.json
+                                                                                                   
