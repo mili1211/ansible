@@ -4,6 +4,7 @@
       name: student-list:latest
       build:
         path: /home/ec2-user/ansible/student-list/simple_api
+        pull: no
       source: build
     tags: image-back
 
