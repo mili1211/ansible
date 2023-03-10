@@ -5,7 +5,7 @@
         ports:
           - "80:80"
         volumes:
-          - /home/milica/ansible/student-list/website:/var/www/html
+          - /home/ec2-user/ansible/student-list/website:/var/www/html
         env:
           USERNAME: "toto"
           PASSWORD: "python"
