@@ -12,7 +12,6 @@
         image: php:apache
         networks:
             - name: student-list
-      tags: container_front
 
     
 

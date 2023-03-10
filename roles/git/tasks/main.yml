@@ -4,12 +4,10 @@
        name: git
        state: present
        update_cache: yes
-      tags: install_git
 
     - name: Clone the project from GitHub
       ansible.builtin.git:
         repo: "https://github.com/mili1211/ansible.git"
         force: yes
         dest:  /home/ec2-user/ansible
-      tags: clone_repo
     
