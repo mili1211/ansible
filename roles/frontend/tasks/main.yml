@@ -1,7 +1,7 @@
 ---
     - name: Start the container with the frontend and connect it to the network
       docker_container: 
-        name: ihm-projet-a
+        name: ihm-projet-c
         ports:
           - "80:80"
         volumes:
