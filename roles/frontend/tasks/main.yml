@@ -12,6 +12,8 @@
         image: php:apache
         networks:
             - name: student-list
+        networks_cli_compatible: yes
+      tags: container-frontend
 
     
 
