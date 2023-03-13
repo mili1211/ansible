@@ -1,2 +1,12 @@
 ---
-# tasks file for delete
+   - name: Stop running Docker containers
+     shell: docker stop $(docker ps -aq)
+     ignore_errors: true
+      
+   - name: Remove stopped Docker containers
+     shell: docker rm $(docker ps -aq)
+     ignore_errors: true
+   
+   - name: Remove all Docker images
+     shell: docker rmi -f $(docker images -aq)
+     ignore_errors: true

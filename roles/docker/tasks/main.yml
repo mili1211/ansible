@@ -31,11 +31,4 @@
        state: present
 
    - name: Install Docker module for Python 2.7
-     command: pip2 install docker --ignore-installed
-
-
- 
-
-
-
-  
+     command: pip2 install docker --ignore-installed  
