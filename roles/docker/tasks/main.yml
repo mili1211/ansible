@@ -24,7 +24,14 @@
        name: ec2-user
        append: yes
        groups: docker
+   
+   - name: Install Python pip for Python 2.7
+     yum:
+       name: python2-pip
+       state: present
 
+   - name: Install Docker module for Python 2.7
+     command: pip2 install docker --ignore-installed
 
 
  
